@@ -2,11 +2,11 @@ package com.dex.burger.models.ingredient;
 
 public enum IngredientInfo {
 
-	LETUCE(1L, "letuce"),
-	BACON(2L ,"bacon"),
-	MEAT(3L, "meat"),
-	EGG(4L, "egg"),
-	CHEESE(5L, "cheese");
+	LETUCE(1L, "Alface"),
+	BACON(2L ,"Bacon"),
+	MEAT(3L, "Hamburguer de carne"),
+	EGG(4L, "Ovo"),
+	CHEESE(5L, "Queijo");
 
 	private Long id;
 	private String name;

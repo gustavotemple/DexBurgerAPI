@@ -19,10 +19,10 @@ import com.dex.burger.models.order.Order;
 public class OrderController {
 
 	@Autowired
-	IngredientFactory ingredientFactory;
+	private IngredientFactory ingredientFactory;
 
 	@Autowired
-	BurgerFactory burgerFactory;
+	private BurgerFactory burgerFactory;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Order> getOrderById(@PathVariable("id") Long orderId) {

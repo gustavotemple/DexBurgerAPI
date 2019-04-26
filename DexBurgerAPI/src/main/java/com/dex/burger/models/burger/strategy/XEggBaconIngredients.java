@@ -12,8 +12,6 @@ public class XEggBaconIngredients extends BurgerIngredientsStrategy {
 
 	@Override
 	Burger addIngredients(Burger burger) {
-		final IngredientFactory ingredientFactory = new IngredientFactory();
-		
 		burger.addIngredient(ingredientFactory.create(IngredientInfo.EGG));
 		burger.addIngredient(ingredientFactory.create(IngredientInfo.BACON));
 		burger.addIngredient(ingredientFactory.create(IngredientInfo.MEAT));
