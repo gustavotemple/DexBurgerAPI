@@ -1,11 +1,11 @@
-package com.dex.burger.models.burgers;
+package com.dex.burger.models.burger;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import com.dex.burger.models.ingredients.Ingredient;
+import com.dex.burger.models.ingredient.Ingredient;
 
 public abstract class Burger {
 

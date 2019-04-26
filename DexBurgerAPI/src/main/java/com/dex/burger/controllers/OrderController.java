@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dex.burger.models.burgers.Burger;
-import com.dex.burger.models.burgers.BurgerInfo;
-import com.dex.burger.models.factories.BurgerFactory;
-import com.dex.burger.models.factories.IngredientFactory;
-import com.dex.burger.models.ingredients.IngredientInfo;
+import com.dex.burger.models.burger.Burger;
+import com.dex.burger.models.burger.BurgerInfo;
+import com.dex.burger.models.burger.factory.BurgerFactory;
+import com.dex.burger.models.ingredient.IngredientInfo;
+import com.dex.burger.models.ingredient.factory.IngredientFactory;
 import com.dex.burger.models.order.Order;
 
 @RestController

@@ -1,6 +1,6 @@
-package com.dex.burger.models.burgers.strategy;
+package com.dex.burger.models.burger.strategy;
 
-import com.dex.burger.models.burgers.Burger;
+import com.dex.burger.models.burger.Burger;
 
 public class IngredientsContext {
 

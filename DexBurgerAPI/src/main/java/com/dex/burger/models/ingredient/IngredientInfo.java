@@ -1,4 +1,4 @@
-package com.dex.burger.models.ingredients;
+package com.dex.burger.models.ingredient;
 
 public enum IngredientInfo {
 

@@ -1,4 +1,4 @@
-package com.dex.burger.models.burgers;
+package com.dex.burger.models.burger;
 
 public enum BurgerInfo {
 

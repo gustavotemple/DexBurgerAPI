@@ -1,7 +1,7 @@
-package com.dex.burger.models.burgers.strategy;
+package com.dex.burger.models.burger.strategy;
 
-import com.dex.burger.models.burgers.Burger;
-import com.dex.burger.models.factories.IngredientFactory;
+import com.dex.burger.models.burger.Burger;
+import com.dex.burger.models.ingredient.factory.IngredientFactory;
 
 abstract class BurgerIngredientsStrategy {
 
