@@ -14,7 +14,7 @@ import com.dex.burger.models.ingredient.factory.IngredientFactory;
 
 @Component
 public class BurgerFactory implements AbstracBurgerFactory<Burger> {
-	
+
 	@Autowired
 	IngredientFactory ingredientFactory;
 
@@ -23,24 +23,46 @@ public class BurgerFactory implements AbstracBurgerFactory<Burger> {
 
 		final IngredientsContext ctx = new IngredientsContext();
 
-		if (burgerInfo.equals(BurgerInfo.XBACON)) {
+		if (BurgerInfo.XBACON.equals(burgerInfo)) {
 			ctx.setIngredientsStrategy(new XBaconIngredients(ingredientFactory));
 			return ctx.createBurger(new XBacon());
 		}
 
-		if (burgerInfo.equals(BurgerInfo.XBURGER)) {
+		if (BurgerInfo.XBURGER.equals(burgerInfo)) {
 			ctx.setIngredientsStrategy(new XBurgerIngredients(ingredientFactory));
 			return ctx.createBurger(new XBurger());
 		}
 
-		if (burgerInfo.equals(BurgerInfo.XEGG)) {
+		if (BurgerInfo.XEGG.equals(burgerInfo)) {
 			ctx.setIngredientsStrategy(new XEggIngredients(ingredientFactory));
 			return ctx.createBurger(new XEgg());
 		}
 
-		if (burgerInfo.equals(BurgerInfo.XEGGBACON)) {
+		if (BurgerInfo.XEGGBACON.equals(burgerInfo)) {
 			ctx.setIngredientsStrategy(new XEggBaconIngredients(ingredientFactory));
 			return ctx.createBurger(new XEggBacon());
+		}
+
+		return null;
+	}
+
+	@Override
+	public Burger create(Long id) {
+
+		if (BurgerInfo.XBACON.getId().equals(id)) {
+			return create(BurgerInfo.XBACON);
+		}
+
+		if (BurgerInfo.XBURGER.getId().equals(id)) {
+			return create(BurgerInfo.XBURGER);
+		}
+
+		if (BurgerInfo.XEGG.getId().equals(id)) {
+			return create(BurgerInfo.XEGG);
+		}
+
+		if (BurgerInfo.XEGGBACON.getId().equals(id)) {
+			return create(BurgerInfo.XEGGBACON);
 		}
 
 		return null;

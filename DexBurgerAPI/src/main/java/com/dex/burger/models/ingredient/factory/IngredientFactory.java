@@ -15,16 +15,32 @@ public class IngredientFactory implements AbstractIngredientFactory<Ingredient> 
 
 	@Override
 	public Ingredient create(IngredientInfo ingredient) {
-		if (ingredient.equals(IngredientInfo.LETUCE))
+		if (IngredientInfo.LETUCE.equals(ingredient))
 			return new Letuce(priceProperties.getLetuce());
-		if (ingredient.equals(IngredientInfo.BACON))
+		if (IngredientInfo.BACON.equals(ingredient))
 			return new Bacon(priceProperties.getBacon());
-		if (ingredient.equals(IngredientInfo.MEAT))
+		if (IngredientInfo.MEAT.equals(ingredient))
 			return new Meat(priceProperties.getMeat());
-		if (ingredient.equals(IngredientInfo.EGG))
+		if (IngredientInfo.EGG.equals(ingredient))
 			return new Egg(priceProperties.getEgg());
-		if (ingredient.equals(IngredientInfo.CHEESE))
+		if (IngredientInfo.CHEESE.equals(ingredient))
 			return new Cheese(priceProperties.getCheese());
+
+		return null;
+	}
+
+	@Override
+	public Ingredient create(Long id) {
+		if (IngredientInfo.LETUCE.getId().equals(id))
+			return create(IngredientInfo.LETUCE);
+		if (IngredientInfo.BACON.getId().equals(id))
+			return create(IngredientInfo.BACON);
+		if (IngredientInfo.MEAT.getId().equals(id))
+			return create(IngredientInfo.MEAT);
+		if (IngredientInfo.EGG.getId().equals(id))
+			return create(IngredientInfo.EGG);
+		if (IngredientInfo.CHEESE.getId().equals(id))
+			return create(IngredientInfo.CHEESE);
 
 		return null;
 	}
