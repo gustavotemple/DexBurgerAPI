@@ -2,25 +2,25 @@ package com.dex.burger.models.burger;
 
 public enum BurgerInfo {
 
-	XBACON(1L, "X-Bacon"),
-	XBURGER(2L, "X-Burger"),
-	XEGG(3L, "X-Egg"),
-	XEGGBACON(4L, "X-Egg Bacon");
+	XBACON(1L, new Burger(1L, "X-Bacon")),
+	XBURGER(2L, new Burger(2L, "X-Burger")),
+	XEGG(3L, new Burger(3L, "X-Egg")),
+	XEGGBACON(4L, new Burger(4L, "X-Egg Bacon"));
 
 	private Long id;
-	private String name;
+	private Burger burger;
 
-	private BurgerInfo(Long id, String name) {
+	private BurgerInfo(Long id, Burger burger) {
 		this.id = id;
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
+		this.burger = burger;
 	}
 
 	public Long getId() {
 		return id;
+	}
+
+	public Burger getBurger() {
+		return burger;
 	}
 
 }

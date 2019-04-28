@@ -8,15 +8,15 @@ import com.dex.burger.models.order.OrderDTO;
 
 public interface OrderService {
 
-	public Order addOrder(OrderDTO orderDTO);
+	Order addOrder(OrderDTO orderDTO);
 
-	public Order getOrder(Long orderId);
+	Order getOrder(Long orderId);
 
-	public Order updateOrder(Long orderId, Order order);
+	Order updateOrder(Long orderId, Order order);
 
-	public void deleteOrder(Long orderId);
+	void deleteOrder(Long orderId);
 	
-	public Collection<Burger> getBurgersByOrder(Long orderId);
+	Collection<Burger> getBurgersByOrder(Long orderId);
 
-	public Collection<Order> findAll();
+	Collection<Order> findAll();
 }

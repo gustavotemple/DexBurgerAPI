@@ -2,6 +2,7 @@ package com.dex.burger.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.dex.burger.models.ingredient.Ingredient;
 import com.dex.burger.models.ingredient.IngredientInfo;
@@ -36,8 +37,8 @@ public final class IngredientRepository {
 		return ingredients;
 	}
 
-	public Ingredient findById(Long id) {
-		return ingredients.stream().filter(i -> id.equals(i.getId())).findAny().orElse(null);
+	public Optional<Ingredient> findById(Long id) {
+		return ingredients.stream().filter(i -> id.equals(i.getId())).findAny();
 	}
 
 }

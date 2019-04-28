@@ -25,22 +25,22 @@ public class BurgerFactory implements AbstracBurgerFactory<Burger> {
 
 		if (BurgerInfo.XBACON.equals(burgerInfo)) {
 			ctx.setIngredientsStrategy(new XBaconIngredients(ingredientFactory));
-			return ctx.createBurger(new XBacon());
+			return ctx.createBurger(BurgerInfo.XBACON.getBurger());
 		}
 
 		if (BurgerInfo.XBURGER.equals(burgerInfo)) {
 			ctx.setIngredientsStrategy(new XBurgerIngredients(ingredientFactory));
-			return ctx.createBurger(new XBurger());
+			return ctx.createBurger(BurgerInfo.XBURGER.getBurger());
 		}
 
 		if (BurgerInfo.XEGG.equals(burgerInfo)) {
 			ctx.setIngredientsStrategy(new XEggIngredients(ingredientFactory));
-			return ctx.createBurger(new XEgg());
+			return ctx.createBurger(BurgerInfo.XEGG.getBurger());
 		}
 
 		if (BurgerInfo.XEGGBACON.equals(burgerInfo)) {
 			ctx.setIngredientsStrategy(new XEggBaconIngredients(ingredientFactory));
-			return ctx.createBurger(new XEggBacon());
+			return ctx.createBurger(BurgerInfo.XEGGBACON.getBurger());
 		}
 
 		return null;

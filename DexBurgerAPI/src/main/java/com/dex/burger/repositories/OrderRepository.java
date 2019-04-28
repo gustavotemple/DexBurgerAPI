@@ -2,12 +2,14 @@ package com.dex.burger.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
 
 import com.dex.burger.models.order.Order;
 
+@Repository
 public final class OrderRepository {
-
-	private static OrderRepository instance;
 
 	private List<Order> orders;
 
@@ -15,18 +17,12 @@ public final class OrderRepository {
 		orders = new ArrayList<Order>();
 	}
 
-	public static OrderRepository getInstance() {
-		if (instance == null)
-			instance = new OrderRepository();
-		return instance;
-	}
-
 	public List<Order> findAll() {
 		return orders;
 	}
 
-	public Order findById(Long id) {
-		return orders.stream().filter(i -> id.equals(i.getId())).findAny().orElse(null);
+	public Optional<Order> findById(Long id) {
+		return orders.stream().filter(i -> id.equals(i.getId())).findAny();
 	}
 
 	public void add(Order order) {

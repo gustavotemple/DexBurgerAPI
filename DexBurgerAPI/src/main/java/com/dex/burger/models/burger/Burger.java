@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import com.dex.burger.models.ingredient.Ingredient;
 
-public abstract class Burger {
+public class Burger {
 
 	private Long id;
 	

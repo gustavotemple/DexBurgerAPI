@@ -2,7 +2,7 @@ package com.dex.burger.models.ingredient;
 
 import java.math.BigDecimal;
 
-public abstract class Ingredient {
+public class Ingredient {
 
 	private Long id;
 
@@ -10,10 +10,9 @@ public abstract class Ingredient {
 
 	private BigDecimal price;
 
-	public Ingredient(Long id, String name, BigDecimal price) {
+	public Ingredient(Long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.price = price;
 	}
 
 	public Long getId() {
@@ -22,6 +21,11 @@ public abstract class Ingredient {
 
 	public String getName() {
 		return name;
+	}
+
+	public Ingredient setPrice(BigDecimal price) {
+		this.price = price;
+		return this;
 	}
 
 	public BigDecimal getPrice() {

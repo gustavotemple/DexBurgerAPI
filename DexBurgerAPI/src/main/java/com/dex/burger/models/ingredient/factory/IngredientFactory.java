@@ -16,15 +16,15 @@ public class IngredientFactory implements AbstractIngredientFactory<Ingredient> 
 	@Override
 	public Ingredient create(IngredientInfo ingredient) {
 		if (IngredientInfo.LETUCE.equals(ingredient))
-			return new Letuce(priceProperties.getLetuce());
+			return IngredientInfo.LETUCE.getIngredient().setPrice(priceProperties.getLetuce());
 		if (IngredientInfo.BACON.equals(ingredient))
-			return new Bacon(priceProperties.getBacon());
+			return IngredientInfo.BACON.getIngredient().setPrice(priceProperties.getBacon());
 		if (IngredientInfo.MEAT.equals(ingredient))
-			return new Meat(priceProperties.getMeat());
+			return IngredientInfo.MEAT.getIngredient().setPrice(priceProperties.getMeat());
 		if (IngredientInfo.EGG.equals(ingredient))
-			return new Egg(priceProperties.getEgg());
+			return IngredientInfo.EGG.getIngredient().setPrice(priceProperties.getEgg());
 		if (IngredientInfo.CHEESE.equals(ingredient))
-			return new Cheese(priceProperties.getCheese());
+			return IngredientInfo.CHEESE.getIngredient().setPrice(priceProperties.getCheese());
 
 		return null;
 	}
