@@ -1,14 +1,15 @@
 package com.dexburger.prices.service;
 
+import java.math.BigDecimal;
+
 import com.dexburger.burgers.model.Burger;
-import com.dexburger.exceptions.IngredientNotFoundException;
 import com.dexburger.order.model.Order;
 
 public interface PriceService {
 
-	Burger calculatePrice(Burger burger);
+	BigDecimal calculatePrice(Burger burger);
 
-	Burger calculatePrice(Order order);
+	BigDecimal calculatePrice(Order order);
 
 	void applyDiscount(Burger burger);
 

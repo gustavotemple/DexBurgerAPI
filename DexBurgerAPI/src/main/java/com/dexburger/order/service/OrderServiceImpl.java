@@ -3,7 +3,6 @@ package com.dexburger.order.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 	private BurgerFactory burgerFactory;
 	private IngredientFactory ingredientFactory;
 	private OrderRepository orderRepository;
-	
+
 	@Autowired
 	public OrderServiceImpl(BurgerFactory burgerFactory, IngredientFactory ingredientFactory,
 			OrderRepository orderRepository) {
@@ -34,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
 		this.ingredientFactory = ingredientFactory;
 		this.orderRepository = orderRepository;
 	}
-	
+
 	private Burger burgerDTOtoBurger(final BurgerDTO burgerDTO) {
 		Burger burger = burgerFactory.create(burgerDTO.getId());
 
@@ -43,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
 			for (Ingredient extra : extras)
 				burger.addIngredient(extra);
 		}
-		
+
 		return burger;
 	}
 
@@ -73,9 +72,9 @@ public class OrderServiceImpl implements OrderService {
 
 		if (CollectionUtils.isEmpty(burgersDTO))
 			throw new BurgerNotFoundException();
-		
+
 		final List<Burger> burgers = burgersDTOtoBurgers(burgersDTO);
-		
+
 		Order order = new Order();
 		order.setBurgers(burgers);
 		orderRepository.add(order);
@@ -84,12 +83,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order getOrder(final Long orderId) {
-		final Optional<Order> order = orderRepository.findById(orderId);
-
-		if (!order.isPresent())
-			throw new OrderNotFoundException(orderId);
-		return order.get();
-
+		return orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
 	}
 
 	@Override
@@ -101,12 +95,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void deleteOrder(final Long orderId) {
-		final Optional<Order> order = orderRepository.findById(orderId);
+		final Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
 
-		if (!order.isPresent())
-			throw new OrderNotFoundException(orderId);
-
-		orderRepository.remove(order.get());
+		orderRepository.remove(order);
 	}
 
 	@Override
@@ -121,12 +112,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Collection<Burger> getBurgersByOrder(final Long orderId) {
-		final Optional<Order> order = orderRepository.findById(orderId);
+		final Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
 
-		if (!order.isPresent())
-			throw new OrderNotFoundException(orderId);
-
-		final List<Burger> burgers = order.get().getBurgers();
+		final List<Burger> burgers = order.getBurgers();
 
 		if (CollectionUtils.isEmpty(burgers))
 			throw new BurgerNotFoundException();
