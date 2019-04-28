@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import com.dexburger.prices.IngredientsPrices;
 import com.google.common.base.Predicates;
 
 import springfox.documentation.builders.PathSelectors;
@@ -21,10 +22,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @ComponentScan(basePackages = { ApplicationConfig.BASE_PACKAGE })
-@EnableConfigurationProperties(PriceProperties.class)
+@EnableConfigurationProperties(IngredientsPrices.class)
 public class ApplicationConfig {
 	
-	public static final String BASE_PACKAGE = "com.dex.burger";
+	public static final String BASE_PACKAGE = "com.dexburger";
 	
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {

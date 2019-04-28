@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.dexburger.burgers.model.Burger;
-import com.dexburger.discounts.Discounts;
+import com.dexburger.prices.discounts.Discounts;
 
 public class Order {
 

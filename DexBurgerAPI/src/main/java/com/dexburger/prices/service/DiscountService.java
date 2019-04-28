@@ -1,4 +1,4 @@
-package com.dexburger.discounts.service;
+package com.dexburger.prices.service;
 
 import com.dexburger.burgers.model.Burger;
 import com.dexburger.order.model.Order;

@@ -1,11 +1,11 @@
-package com.dexburger.configuration;
+package com.dexburger.prices;
 
 import java.math.BigDecimal;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "dexburger.price")
-public class PriceProperties {
+public class IngredientsPrices {
 
 	private BigDecimal letuce;
 	private BigDecimal bacon;
@@ -13,7 +13,7 @@ public class PriceProperties {
 	private BigDecimal egg;
 	private BigDecimal cheese;
 
-	private PriceProperties() {
+	private IngredientsPrices() {
 	}
 
 	public BigDecimal getLetuce() {

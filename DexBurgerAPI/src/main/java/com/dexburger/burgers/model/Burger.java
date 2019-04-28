@@ -35,9 +35,8 @@ public class Burger {
 		return price;
 	}
 
-	public Burger setPrice(BigDecimal price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
-		return this;
 	}
 
 	public List<Ingredient> getIngredients() {

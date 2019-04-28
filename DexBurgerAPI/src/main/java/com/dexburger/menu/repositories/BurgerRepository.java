@@ -1,4 +1,4 @@
-package com.dexburger.menu.repository;
+package com.dexburger.menu.repositories;
 
 import java.util.ArrayList;
 import java.util.List;

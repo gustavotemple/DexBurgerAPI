@@ -9,7 +9,7 @@ public interface MenuService {
 
 	Collection<Burger> getBurgers();
 
-	Collection<Burger> getIngredients();
+	Collection<Ingredient> getIngredients();
 
 	Burger getBurgerById(Long id);
 

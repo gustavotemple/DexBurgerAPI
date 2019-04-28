@@ -3,28 +3,28 @@ package com.dexburger.ingredients.factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.dexburger.configuration.PriceProperties;
 import com.dexburger.ingredients.IngredientsInfo;
 import com.dexburger.ingredients.model.Ingredient;
+import com.dexburger.prices.IngredientsPrices;
 
 @Component
 public class IngredientFactory implements AbstractIngredientFactory<Ingredient> {
 
 	@Autowired
-	private PriceProperties priceProperties;
+	private IngredientsPrices ingredientsPrices;
 
 	@Override
 	public Ingredient create(IngredientsInfo ingredient) {
 		if (IngredientsInfo.LETUCE.equals(ingredient))
-			return IngredientsInfo.LETUCE.getIngredient().setPrice(priceProperties.getLetuce());
+			return IngredientsInfo.LETUCE.getIngredient().setPrice(ingredientsPrices.getLetuce());
 		if (IngredientsInfo.BACON.equals(ingredient))
-			return IngredientsInfo.BACON.getIngredient().setPrice(priceProperties.getBacon());
+			return IngredientsInfo.BACON.getIngredient().setPrice(ingredientsPrices.getBacon());
 		if (IngredientsInfo.MEAT.equals(ingredient))
-			return IngredientsInfo.MEAT.getIngredient().setPrice(priceProperties.getMeat());
+			return IngredientsInfo.MEAT.getIngredient().setPrice(ingredientsPrices.getMeat());
 		if (IngredientsInfo.EGG.equals(ingredient))
-			return IngredientsInfo.EGG.getIngredient().setPrice(priceProperties.getEgg());
+			return IngredientsInfo.EGG.getIngredient().setPrice(ingredientsPrices.getEgg());
 		if (IngredientsInfo.CHEESE.equals(ingredient))
-			return IngredientsInfo.CHEESE.getIngredient().setPrice(priceProperties.getCheese());
+			return IngredientsInfo.CHEESE.getIngredient().setPrice(ingredientsPrices.getCheese());
 
 		return null;
 	}
