@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.dexburger.burgers.factory.BurgerFactory;
 import com.dexburger.burgers.model.Burger;
@@ -70,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 
 		final List<BurgerDTO> burgersDTO = orderDTO.getBurgers();
 
-		if (burgersDTO.isEmpty())
+		if (CollectionUtils.isEmpty(burgersDTO))
 			throw new BurgerNotFoundException();
 		
 		final List<Burger> burgers = burgersDTOtoBurgers(burgersDTO);
@@ -112,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 	public Collection<Order> findAll() {
 		final List<Order> orders = orderRepository.findAll();
 
-		if (orders.isEmpty())
+		if (CollectionUtils.isEmpty(orders))
 			throw new OrderNotFoundException();
 
 		return orders;
@@ -127,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
 
 		final List<Burger> burgers = order.get().getBurgers();
 
-		if (burgers.isEmpty())
+		if (CollectionUtils.isEmpty(burgers))
 			throw new BurgerNotFoundException();
 
 		return burgers;
