@@ -16,7 +16,7 @@ import com.dex.burger.models.ingredient.factory.IngredientFactory;
 public class BurgerFactory implements AbstracBurgerFactory<Burger> {
 
 	@Autowired
-	IngredientFactory ingredientFactory;
+	private IngredientFactory ingredientFactory;
 
 	@Override
 	public Burger create(BurgerInfo burgerInfo) {

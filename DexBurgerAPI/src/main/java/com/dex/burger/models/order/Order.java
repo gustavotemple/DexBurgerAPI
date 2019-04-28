@@ -12,7 +12,7 @@ import com.dex.burger.models.burger.Burger;
 
 public class Order {
 
-	private static AtomicLong i = new AtomicLong(0L);
+	private static AtomicLong COUNT = new AtomicLong(0L);
 
 	private Long id;
 
@@ -23,7 +23,7 @@ public class Order {
 	private List<Burger> burgers = new ArrayList<>();
 
 	public Order() {
-		id = i.incrementAndGet();
+		id = COUNT.incrementAndGet();
 	}
 
 	public Long getId() {

@@ -32,13 +32,13 @@ public class MenuController {
 	private IngredientFactory ingredientFactory;
 
 	@GetMapping("/lanches")
-	@ApiOperation(value = "Retorna todos lanches")
+	@ApiOperation(value = "Retorna todos lanches do menu")
 	public ResponseEntity<Collection<Burger>> getBurgers() {
 		return ResponseEntity.ok().body(BurgerRepository.getInstance(burgerFactory).findAll());
 	}
 
 	@GetMapping("/lanches/{id}")
-	@ApiOperation(value = "Retorna um lanche")
+	@ApiOperation(value = "Retorna um lanche do menu")
 	public ResponseEntity<Burger> getBurgerById(@PathVariable("id") Long burgerId) {
 		final Optional<Burger> burger = BurgerRepository.getInstance(burgerFactory).findById(burgerId);
 
@@ -49,13 +49,13 @@ public class MenuController {
 	}
 
 	@GetMapping("/ingredientes")
-	@ApiOperation(value = "Retorna todos ingredientes")
+	@ApiOperation(value = "Retorna todos ingredientes do menu")
 	public ResponseEntity<Collection<Ingredient>> getIngredients() {
 		return ResponseEntity.ok().body(IngredientRepository.getInstance(ingredientFactory).findAll());
 	}
 
 	@GetMapping("/ingredientes/{id}")
-	@ApiOperation(value = "Retorna um ingrediente")
+	@ApiOperation(value = "Retorna um ingrediente do menu")
 	public ResponseEntity<Ingredient> getIngredientById(@PathVariable("id") Long ingredientId) {
 		final Optional<Ingredient> ingredient = IngredientRepository.getInstance(ingredientFactory)
 				.findById(ingredientId);

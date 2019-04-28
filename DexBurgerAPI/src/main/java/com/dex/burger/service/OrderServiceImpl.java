@@ -38,11 +38,14 @@ public class OrderServiceImpl implements OrderService {
 		final List<Burger> burgers = new ArrayList<Burger>();
 
 		for (BurgerDTO burgerDTO : burgersDTO) {
-			List<Ingredient> extras = ingredientsDTOtoIngredients(burgerDTO.getExtras());
 
 			Burger burger = burgerFactory.create(burgerDTO.getId());
-			for (Ingredient extra : extras)
-				burger.addIngredient(extra);
+
+			if (burgerDTO.getExtras() != null) {
+				List<Ingredient> extras = ingredientsDTOtoIngredients(burgerDTO.getExtras());
+				for (Ingredient extra : extras)
+					burger.addIngredient(extra);
+			}
 
 			burgers.add(burger);
 		}

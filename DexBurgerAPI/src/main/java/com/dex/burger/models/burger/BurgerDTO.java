@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class BurgerDTO {
 
-	@ApiModelProperty(notes = "ID do lanche")
+	@ApiModelProperty(notes = "Numero do lanche")
 	private Long id;
 
 	@ApiModelProperty(notes = "Ingredientes Extras")
