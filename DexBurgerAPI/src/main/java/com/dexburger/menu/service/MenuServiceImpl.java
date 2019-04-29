@@ -35,9 +35,9 @@ public class MenuServiceImpl implements MenuService {
 	public Collection<Burger> getBurgers() {
 		List<Burger> burgers = BurgerRepository.getInstance(burgerFactory).findAll();
 
-		burgers.stream().forEach(burger -> burger.setPrice(priceService.calculatePrice(burger)));
+		burgers.stream().forEach(burger -> priceService.calculatePrice(burger));
 
-		return BurgerRepository.getInstance(burgerFactory).findAll();
+		return burgers;
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class MenuServiceImpl implements MenuService {
 		final Burger burger = BurgerRepository.getInstance(burgerFactory).findById(id)
 				.orElseThrow(() -> new BurgerNotFoundException(id));
 
-		burger.setPrice(priceService.calculatePrice(burger));
+		priceService.calculatePrice(burger);
 
 		return burger;
 	}

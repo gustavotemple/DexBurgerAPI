@@ -9,7 +9,8 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.dexburger.burgers.model.Burger;
-import com.dexburger.prices.discounts.Discounts;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Order {
 
@@ -17,9 +18,11 @@ public class Order {
 
 	private Long id;
 
+	@JsonIgnore
 	private BigDecimal price;
 
-	private List<Discounts> discounts = new ArrayList<>();
+	@JsonProperty("total price")
+	private String prettyPrintPrice;
 
 	private List<Burger> burgers = new ArrayList<>();
 
@@ -44,24 +47,20 @@ public class Order {
 		this.price = price;
 	}
 
+	public String getPrettyPrintPrice() {
+		return prettyPrintPrice;
+	}
+
+	public void setPrettyPrintPrice(String prettyPrintPrice) {
+		this.prettyPrintPrice = prettyPrintPrice;
+	}
+
 	public List<Burger> getBurgers() {
 		return Optional.ofNullable(burgers).orElse(Collections.emptyList());
 	}
 
 	public void setBurgers(List<Burger> burgers) {
 		this.burgers = burgers;
-	}
-
-	public List<Discounts> getDiscounts() {
-		return Optional.ofNullable(discounts).orElse(Collections.emptyList());
-	}
-
-	public void addDiscount(Discounts discount) {
-		this.discounts.add(discount);
-	}
-
-	public void removeDiscount(Discounts discount) {
-		this.discounts.remove(discount);
 	}
 
 	@Override

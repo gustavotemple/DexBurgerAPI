@@ -32,17 +32,13 @@ public class OrderController {
 	@PostMapping
 	@ApiOperation(value = "Adiciona um pedido")
 	public ResponseEntity<Order> addOrder(@Valid @RequestBody OrderDTO orderDTO) {
-		final Order order = orderService.addOrder(orderDTO);
-
-		return ResponseEntity.ok().body(order);
+		return ResponseEntity.ok().body(orderService.addOrder(orderDTO));
 	}
 
 	@GetMapping("/{id}")
 	@ApiOperation(value = "Retorna um pedido")
 	public ResponseEntity<Order> getOrderById(@PathVariable("id") Long orderId) {
-		final Order order = orderService.getOrder(orderId);
-
-		return ResponseEntity.ok().body(order);
+		return ResponseEntity.ok().body(orderService.getOrder(orderId));
 	}
 
 	@GetMapping("/{id}/lanches")
@@ -53,18 +49,16 @@ public class OrderController {
 
 	@PutMapping("/{id}")
 	@ApiOperation(value = "Atualiza um pedido")
-	public ResponseEntity<Order> updateOrder(@PathVariable("id") Long orderId, @Valid @RequestBody Order order) {
-		final Order hospital = orderService.updateOrder(orderId, order);
-
-		return ResponseEntity.ok().body(hospital);
+	public ResponseEntity<Order> updateOrder(@PathVariable("id") Long orderId, @Valid @RequestBody OrderDTO orderDTO) {
+		return ResponseEntity.ok().body(orderService.updateOrder(orderId, orderDTO));
 	}
 
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Exclui um pedido")
-	public ResponseEntity<String> deleteOrder(@PathVariable("id") Long orderId) {
+	public ResponseEntity<?> deleteOrder(@PathVariable("id") Long orderId) {
 		orderService.deleteOrder(orderId);
 
-		return ResponseEntity.ok().body("Pedido " + orderId + " apagado.");
+		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping

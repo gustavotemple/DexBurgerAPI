@@ -18,6 +18,7 @@ import com.dexburger.ingredients.model.Ingredient;
 import com.dexburger.order.model.Order;
 import com.dexburger.order.model.OrderDTO;
 import com.dexburger.order.repository.OrderRepository;
+import com.dexburger.prices.service.PriceService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -25,29 +26,25 @@ public class OrderServiceImpl implements OrderService {
 	private BurgerFactory burgerFactory;
 	private IngredientFactory ingredientFactory;
 	private OrderRepository orderRepository;
+	private PriceService priceService;
 
 	@Autowired
 	public OrderServiceImpl(BurgerFactory burgerFactory, IngredientFactory ingredientFactory,
-			OrderRepository orderRepository) {
+			OrderRepository orderRepository, PriceService priceService) {
 		this.burgerFactory = burgerFactory;
 		this.ingredientFactory = ingredientFactory;
 		this.orderRepository = orderRepository;
+		this.priceService = priceService;
 	}
-
-	private Burger burgerDTOtoBurger(final BurgerDTO burgerDTO) {
-		Burger burger = burgerFactory.create(burgerDTO.getId());
-
-		if (burgerDTO.getExtras() != null) {
-			List<Ingredient> extras = ingredientsDTOtoIngredients(burgerDTO.getExtras());
-			for (Ingredient extra : extras)
-				burger.addIngredient(extra);
-		}
-
-		return burger;
-	}
-
+	
+	/**
+	 * burgersDTOtoBurgers
+	 * 
+	 * @param burgersDTO List<BurgerDTO>
+	 * @return List<Burger>
+	 */
 	private List<Burger> burgersDTOtoBurgers(final List<BurgerDTO> burgersDTO) {
-		final List<Burger> burgers = new ArrayList<Burger>();
+		List<Burger> burgers = new ArrayList<Burger>();
 
 		for (BurgerDTO burgerDTO : burgersDTO) {
 			burgers.add(burgerDTOtoBurger(burgerDTO));
@@ -56,8 +53,45 @@ public class OrderServiceImpl implements OrderService {
 		return burgers;
 	}
 
+	/**
+	 * burgerDTOtoBurger
+	 * 
+	 * @param burgerDTO BurgerDTO
+	 * @return Burger
+	 */
+	private Burger burgerDTOtoBurger(final BurgerDTO burgerDTO) {
+		Burger burger = burgerFactory.create(burgerDTO.getId());
+
+		if (!CollectionUtils.isEmpty(burgerDTO.getExtras())) {
+			List<Ingredient> extras = ingredientsDTOtoIngredients(burgerDTO.getExtras());
+			for (Ingredient extra : extras)
+				burger.addIngredient(extra);
+		}
+		
+		calculateFinalPrice(burger);
+
+		return burger;
+	}
+	
+	/**
+	 * applyDiscount
+	 * 
+	 * @param burger Burger
+	 */
+	private void calculateFinalPrice(Burger burger) {
+		priceService.calculatePrice(burger);
+		priceService.fitDiscount(burger);
+		priceService.applyDiscount(burger);		
+	}
+
+	/**
+	 * ingredientsDTOtoIngredients
+	 * 
+	 * @param ingredientsDTO List<Long>
+	 * @return List<Ingredient>
+	 */
 	private List<Ingredient> ingredientsDTOtoIngredients(final List<Long> ingredientsDTO) {
-		final List<Ingredient> ingredients = new ArrayList<Ingredient>();
+		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
 		for (Long ingredientDTO : ingredientsDTO)
 			ingredients.add(ingredientFactory.create(ingredientDTO));
@@ -67,16 +101,16 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order addOrder(final OrderDTO orderDTO) {
-
-		final List<BurgerDTO> burgersDTO = orderDTO.getBurgers();
+		List<BurgerDTO> burgersDTO = orderDTO.getBurgers();
 
 		if (CollectionUtils.isEmpty(burgersDTO))
 			throw new BurgerNotFoundException();
 
-		final List<Burger> burgers = burgersDTOtoBurgers(burgersDTO);
+		List<Burger> burgers = burgersDTOtoBurgers(burgersDTO);
 
 		Order order = new Order();
 		order.setBurgers(burgers);
+		priceService.calculatePrice(order);
 		orderRepository.add(order);
 		return order;
 	}
@@ -87,17 +121,24 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Order updateOrder(final Long orderId, final Order order) {
-		order.setId(orderId);
+	public Order updateOrder(final Long orderId, final OrderDTO orderDTO) {
+		List<BurgerDTO> burgersDTO = orderDTO.getBurgers();
+		
+		if (CollectionUtils.isEmpty(burgersDTO))
+			throw new BurgerNotFoundException();
+
+		List<Burger> burgers = burgersDTOtoBurgers(burgersDTO);
+
+		Order order = getOrder(orderId);
+		order.setBurgers(burgers);
+		priceService.calculatePrice(order);
 		orderRepository.update(order);
 		return order;
 	}
 
 	@Override
 	public void deleteOrder(final Long orderId) {
-		final Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
-
-		orderRepository.remove(order);
+		orderRepository.remove(getOrder(orderId));
 	}
 
 	@Override
@@ -112,9 +153,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Collection<Burger> getBurgersByOrder(final Long orderId) {
-		final Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
+		Order order = getOrder(orderId);
 
-		final List<Burger> burgers = order.getBurgers();
+		List<Burger> burgers = order.getBurgers();
 
 		if (CollectionUtils.isEmpty(burgers))
 			throw new BurgerNotFoundException();
