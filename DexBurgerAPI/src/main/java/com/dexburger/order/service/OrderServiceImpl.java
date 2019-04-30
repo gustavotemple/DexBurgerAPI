@@ -80,8 +80,7 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	private void calculateFinalPrice(Burger burger) {
 		priceService.calculatePrice(burger);
-		priceService.fitDiscount(burger);
-		priceService.applyDiscount(burger);		
+		priceService.applyDiscounts(burger);
 	}
 
 	/**

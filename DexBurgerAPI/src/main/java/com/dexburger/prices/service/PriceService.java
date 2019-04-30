@@ -8,8 +8,6 @@ public interface PriceService {
 	void calculatePrice(Burger burger);
 
 	void calculatePrice(Order order);
-	
-	void fitDiscount(Burger burger);
 
-	void applyDiscount(Burger burger);
+	void applyDiscounts(Burger burger);
 }

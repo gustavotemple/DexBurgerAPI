@@ -18,9 +18,7 @@ import com.dexburger.prices.discounts.Discounts;
 @Service
 public class PriceServiceImpl implements PriceService {
 
-	private static final int MIN_INGREDIENT_DISCOUNT = 3;
 	private static final int SCALE = 2;
-	private static final BigDecimal CHEESE_DISCOUNT = new BigDecimal(20);
 
 	@Override
 	public void calculatePrice(final Burger burger) {
@@ -44,42 +42,46 @@ public class PriceServiceImpl implements PriceService {
 	}
 
 	@Override
-	public void applyDiscount(Burger burger) {
-		if (burger.getPrice() == null || burger.getPrice() == BigDecimal.ZERO
-				|| CollectionUtils.isEmpty(burger.getDiscounts()))
+	public void applyDiscounts(final Burger burger) {
+		if (burger.getPrice() == null || burger.getPrice() == BigDecimal.ZERO)
 			return;
-		
-		if (burger.getDiscounts().contains(Discounts.CHEESE)) {
-			burger.setPrice(burger.getPrice().subtract(percentage(burger.getPrice(), CHEESE_DISCOUNT)));
-			burger.setPrettyPrintPrice(formatMoney(burger.getPrice()));
+
+		applyMeatCheeseDiscount(burger);
+		applyLightDiscount(burger);
+
+		burger.setPrettyPrintPrice(formatMoney(burger.getPrice()));
+	}
+
+	private void applyLightDiscount(final Burger burger) {
+		if (burger.getIngredients().contains(IngredientsInfo.LETUCE.getIngredient())
+				&& !burger.getIngredients().contains(IngredientsInfo.BACON.getIngredient())) {
+			burger.setPrice(
+					burger.getPrice().subtract(percentage(burger.getPrice(), Discounts.LIGHT.getPercentageDiscount())));
+			burger.addDiscount(Discounts.LIGHT);
+		}
+	}
+
+	private void applyMeatCheeseDiscount(final Burger burger) {
+		int meats = 0;
+		int cheeses = 0;
+
+		for (Ingredient ingredient : burger.getIngredients()) {
+			if (ingredient.getId().equals(IngredientsInfo.MEAT.getId()))
+				meats++;
+			else if (ingredient.getId().equals(IngredientsInfo.CHEESE.getId()))
+				cheeses++;
+
+			if (meats > 0 && meats % Discounts.MEAT.getQuantityDiscount() == 0)
+				burger.setPrice(burger.getPrice().subtract(IngredientsInfo.MEAT.getIngredient().getPrice()));
+
+			if (cheeses > 0 && cheeses % Discounts.CHEESE.getQuantityDiscount() == 0)
+				burger.setPrice(burger.getPrice().subtract(IngredientsInfo.CHEESE.getIngredient().getPrice()));
 		}
 
-		// TODO
-
-	}
-
-	@Override
-	public void fitDiscount(final Burger burger) {
-		fitLightDiscount(burger);
-		fitMeatDiscount(burger);
-		fitCheeseDiscount(burger);
-	}
-
-	private void fitLightDiscount(final Burger burger) {
-		if (burger.getIngredients().contains(IngredientsInfo.LETUCE.getIngredient())
-				&& !burger.getIngredients().contains(IngredientsInfo.BACON.getIngredient()))
-			burger.addDiscount(Discounts.LIGHT);
-	}
-
-	private void fitMeatDiscount(final Burger burger) {
-		if (burger.getIngredients().stream().filter(IngredientsInfo.MEAT.getPredicate())
-				.count() >= MIN_INGREDIENT_DISCOUNT)
+		if (meats >= Discounts.MEAT.getQuantityDiscount())
 			burger.addDiscount(Discounts.MEAT);
-	}
 
-	private void fitCheeseDiscount(final Burger burger) {
-		if (burger.getIngredients().stream().filter(IngredientsInfo.CHEESE.getPredicate())
-				.count() >= MIN_INGREDIENT_DISCOUNT)
+		if (cheeses >= Discounts.CHEESE.getQuantityDiscount())
 			burger.addDiscount(Discounts.CHEESE);
 	}
 
@@ -88,9 +90,9 @@ public class PriceServiceImpl implements PriceService {
 		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		return format.format(value.doubleValue());
 	}
-	
-	private BigDecimal percentage(BigDecimal base, BigDecimal pct){
-	    return base.multiply(pct).scaleByPowerOfTen(-2);
+
+	private BigDecimal percentage(BigDecimal base, BigDecimal pct) {
+		return base.multiply(pct).scaleByPowerOfTen(-2);
 	}
 
 }
