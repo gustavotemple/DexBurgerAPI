@@ -46,7 +46,8 @@ public class PriceServiceImpl implements PriceService {
 		if (burger.getPrice() == null || burger.getPrice() == BigDecimal.ZERO)
 			return;
 
-		applyMeatCheeseDiscount(burger);
+		applyDiscount(burger, IngredientsInfo.MEAT, Discounts.MEAT);
+		applyDiscount(burger, IngredientsInfo.CHEESE, Discounts.CHEESE);
 		applyLightDiscount(burger);
 
 		burger.setPrettyPrintPrice(formatMoney(burger.getPrice()));
@@ -61,28 +62,25 @@ public class PriceServiceImpl implements PriceService {
 		}
 	}
 
-	private void applyMeatCheeseDiscount(final Burger burger) {
-		int meats = 0;
-		int cheeses = 0;
+	/**
+	 * applyDiscount
+	 * 
+	 * @param burger     Burger
+	 * @param ingredient IngredientsInfo
+	 * @param discount   Discounts
+	 */
+	private void applyDiscount(final Burger burger, final IngredientsInfo ingredient, final Discounts discount) {
+		long total = burger.getIngredients().stream().filter(ingredient.getPredicate()).count();
 
-		for (Ingredient ingredient : burger.getIngredients()) {
-			if (ingredient.getId().equals(IngredientsInfo.MEAT.getId()))
-				meats++;
-			else if (ingredient.getId().equals(IngredientsInfo.CHEESE.getId()))
-				cheeses++;
+		long pay = (long) total - ((long) total / discount.getQuantityDiscount());
 
-			if (meats > 0 && meats % Discounts.MEAT.getQuantityDiscount() == 0)
-				burger.setPrice(burger.getPrice().subtract(IngredientsInfo.MEAT.getIngredient().getPrice()));
+		long diff = total - pay;
 
-			if (cheeses > 0 && cheeses % Discounts.CHEESE.getQuantityDiscount() == 0)
-				burger.setPrice(burger.getPrice().subtract(IngredientsInfo.CHEESE.getIngredient().getPrice()));
-		}
+		burger.setPrice(
+				burger.getPrice().subtract(ingredient.getIngredient().getPrice().multiply(new BigDecimal(diff))));
 
-		if (meats >= Discounts.MEAT.getQuantityDiscount())
-			burger.addDiscount(Discounts.MEAT);
-
-		if (cheeses >= Discounts.CHEESE.getQuantityDiscount())
-			burger.addDiscount(Discounts.CHEESE);
+		if (total >= discount.getQuantityDiscount())
+			burger.addDiscount(discount);
 	}
 
 	private String formatMoney(BigDecimal value) {
