@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dexburger.burgers.model.Burger;
+import com.dexburger.configuration.ApplicationConfig;
 import com.dexburger.ingredients.model.Ingredient;
 import com.dexburger.menu.service.MenuService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(path = "/api")
+@Api(tags = "Cardapio")
+@RequestMapping(path = ApplicationConfig.PREFIX)
 public class MenuController {
 
 	private MenuService menuService;
@@ -26,25 +29,25 @@ public class MenuController {
 		this.menuService = menuService;
 	}
 
-	@GetMapping("/lanches")
+	@GetMapping("/burgers")
 	@ApiOperation(value = "Retorna todos lanches do menu")
 	public ResponseEntity<Collection<Burger>> getBurgers() {
 		return ResponseEntity.ok().body(menuService.getBurgers());
 	}
 
-	@GetMapping("/lanches/{id}")
+	@GetMapping("/burgers/{id}")
 	@ApiOperation(value = "Retorna um lanche do menu")
 	public ResponseEntity<Burger> getBurgerById(@PathVariable("id") Long burgerId) {
 		return ResponseEntity.ok().body(menuService.getBurgerById(burgerId));
 	}
 
-	@GetMapping("/ingredientes")
+	@GetMapping("/ingredients")
 	@ApiOperation(value = "Retorna todos ingredientes do menu")
 	public ResponseEntity<Collection<Ingredient>> getIngredients() {
 		return ResponseEntity.ok().body(menuService.getIngredients());
 	}
 
-	@GetMapping("/ingredientes/{id}")
+	@GetMapping("/ingredients/{id}")
 	@ApiOperation(value = "Retorna um ingrediente do menu")
 	public ResponseEntity<Ingredient> getIngredientById(@PathVariable("id") Long ingredientId) {
 		return ResponseEntity.ok().body(menuService.getIngredientById(ingredientId));

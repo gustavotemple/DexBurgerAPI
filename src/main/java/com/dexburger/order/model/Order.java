@@ -12,10 +12,15 @@ import com.dexburger.burgers.model.Burger;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "Pedido")
 public class Order {
 
 	private static AtomicLong COUNT = new AtomicLong(0L);
 
+	@ApiModelProperty(notes = "Numero do pedido")
 	private Long id;
 
 	@JsonIgnore
@@ -24,6 +29,7 @@ public class Order {
 	@JsonProperty("total price")
 	private String prettyPrintPrice;
 
+	@ApiModelProperty(notes = "Lanches")
 	private List<Burger> burgers = new ArrayList<>();
 
 	public Order() {

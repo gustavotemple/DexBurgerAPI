@@ -15,19 +15,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dexburger.configuration.ApplicationConfig;
 import com.dexburger.burgers.model.Burger;
 import com.dexburger.order.model.Order;
 import com.dexburger.order.model.OrderDTO;
 import com.dexburger.order.service.OrderService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(path = "/api/pedidos")
+@Api(tags = "Pedidos")
+@RequestMapping(path = ApplicationConfig.PREFIX + "/orders")
 public class OrderController {
 
-	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	public OrderController(OrderService orderService) {
+		this.orderService = orderService;
+	}
 
 	@PostMapping
 	@ApiOperation(value = "Adiciona um pedido")
@@ -41,7 +48,7 @@ public class OrderController {
 		return ResponseEntity.ok().body(orderService.getOrder(orderId));
 	}
 
-	@GetMapping("/{id}/lanches")
+	@GetMapping("/{id}/burgers")
 	@ApiOperation(value = "Retorna os lanches de um pedido")
 	public ResponseEntity<Collection<Burger>> getBurgersByOrderId(@PathVariable("id") Long orderId) {
 		return ResponseEntity.ok().body(orderService.getBurgersByOrder(orderId));

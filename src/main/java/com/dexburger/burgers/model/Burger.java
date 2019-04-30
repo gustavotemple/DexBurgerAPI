@@ -11,10 +11,16 @@ import com.dexburger.prices.discounts.Discounts;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "Lanche")
 public abstract class Burger {
 
+	@ApiModelProperty(notes = "Numero do lanche")
 	private Long id;
 
+	@ApiModelProperty(notes = "Nome")
 	private String name;
 
 	@JsonIgnore
@@ -23,8 +29,10 @@ public abstract class Burger {
 	@JsonProperty("price")
 	private String prettyPrintPrice;
 
+	@ApiModelProperty(notes = "Ingredientes")
 	private List<Ingredient> ingredients;
 
+	@ApiModelProperty(notes = "Descontos")
 	private List<Discounts> discounts;
 
 	public Burger(Long id, String name) {

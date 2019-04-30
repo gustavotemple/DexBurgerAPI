@@ -2,12 +2,19 @@ package com.dexburger.ingredients.model;
 
 import java.math.BigDecimal;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "Ingrediente")
 public class Ingredient {
 
+	@ApiModelProperty(notes = "Numero do ingrediente")
 	private Long id;
 
+	@ApiModelProperty(notes = "Nome")
 	private String name;
 
+	@ApiModelProperty(notes = "Preco")
 	private BigDecimal price;
 
 	public Ingredient(Long id, String name) {
