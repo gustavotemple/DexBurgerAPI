@@ -10,8 +10,12 @@ import com.dexburger.prices.IngredientsPrices;
 @Component
 public class IngredientFactory implements AbstractIngredientFactory<Ingredient> {
 
-	@Autowired
 	private IngredientsPrices ingredientsPrices;
+
+	@Autowired
+	public IngredientFactory(IngredientsPrices ingredientsPrices) {
+		this.ingredientsPrices = ingredientsPrices;
+	}
 
 	@Override
 	public Ingredient create(IngredientsInfo ingredient) {

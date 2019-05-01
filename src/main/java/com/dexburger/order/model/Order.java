@@ -26,7 +26,7 @@ public class Order {
 	@JsonIgnore
 	private BigDecimal price;
 
-	@JsonProperty("total price")
+	@JsonProperty("total_price")
 	private String prettyPrintPrice;
 
 	@ApiModelProperty(notes = "Lanches")
@@ -65,8 +65,13 @@ public class Order {
 		return Optional.ofNullable(burgers).orElse(Collections.emptyList());
 	}
 
-	public void setBurgers(List<Burger> burgers) {
-		this.burgers = burgers;
+	public Order addBurger(Burger burger) {
+		this.burgers.add(burger);
+		return this;
+	}
+
+	public void removeBurger(Burger burger) {
+		this.burgers.remove(burger);
 	}
 
 	@Override

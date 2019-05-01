@@ -38,19 +38,14 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	/**
-	 * burgersDTOtoBurgers
 	 * 
+	 * @param order      Order
 	 * @param burgersDTO List<BurgerDTO>
-	 * @return List<Burger>
 	 */
-	private List<Burger> burgersDTOtoBurgers(final List<BurgerDTO> burgersDTO) {
-		List<Burger> burgers = new ArrayList<Burger>();
-
+	private void burgersDTOtoBurgers(final Order order, final List<BurgerDTO> burgersDTO) {
 		for (BurgerDTO burgerDTO : burgersDTO) {
-			burgers.add(burgerDTOtoBurger(burgerDTO));
+			order.addBurger(burgerDTOtoBurger(burgerDTO));
 		}
-
-		return burgers;
 	}
 
 	/**
@@ -105,10 +100,8 @@ public class OrderServiceImpl implements OrderService {
 		if (CollectionUtils.isEmpty(burgersDTO))
 			throw new BurgerNotFoundException();
 
-		List<Burger> burgers = burgersDTOtoBurgers(burgersDTO);
-
 		Order order = new Order();
-		order.setBurgers(burgers);
+		burgersDTOtoBurgers(order, burgersDTO);
 		priceService.calculatePrice(order);
 		orderRepository.add(order);
 		return order;
@@ -126,10 +119,8 @@ public class OrderServiceImpl implements OrderService {
 		if (CollectionUtils.isEmpty(burgersDTO))
 			throw new BurgerNotFoundException();
 
-		List<Burger> burgers = burgersDTOtoBurgers(burgersDTO);
-
 		Order order = getOrder(orderId);
-		order.setBurgers(burgers);
+		burgersDTOtoBurgers(order, burgersDTO);
 		priceService.calculatePrice(order);
 		orderRepository.update(order);
 		return order;

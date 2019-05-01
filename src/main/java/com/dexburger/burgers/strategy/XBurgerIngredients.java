@@ -12,8 +12,8 @@ public class XBurgerIngredients extends BurgerIngredientsStrategy {
 
 	@Override
 	Burger addIngredients(Burger burger) {
-		burger.addIngredient(ingredientFactory.create(IngredientsInfo.MEAT));
-		burger.addIngredient(ingredientFactory.create(IngredientsInfo.CHEESE));
+		burger.addIngredient(ingredientFactory.create(IngredientsInfo.MEAT))
+		.addIngredient(ingredientFactory.create(IngredientsInfo.CHEESE));
 		
 		return burger;
 	}

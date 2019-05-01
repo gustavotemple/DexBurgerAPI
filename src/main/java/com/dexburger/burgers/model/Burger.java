@@ -82,8 +82,9 @@ public abstract class Burger {
 		return Optional.ofNullable(ingredients).orElse(Collections.emptyList());
 	}
 
-	public void addIngredient(Ingredient ingredient) {
+	public Burger addIngredient(Ingredient ingredient) {
 		this.ingredients.add(ingredient);
+		return this;
 	}
 
 	public void removeIngredient(Ingredient ingredient) {

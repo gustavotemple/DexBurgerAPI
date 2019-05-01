@@ -15,8 +15,12 @@ import com.dexburger.ingredients.factory.IngredientFactory;
 @Component
 public class BurgerFactory implements AbstracBurgerFactory<Burger> {
 
-	@Autowired
 	private IngredientFactory ingredientFactory;
+
+	@Autowired
+	public BurgerFactory(IngredientFactory ingredientFactory) {
+		this.ingredientFactory = ingredientFactory;
+	}
 
 	@Override
 	public Burger create(BurgersInfo burgerInfo) {
