@@ -5,5 +5,5 @@ before_install:
   - chmod +x mvnw
 
 script:
-- ./mvnw install -DskipTests=false -Dmaven.javadoc.skip=false -B -V
-- ./mvnw test -B -V
+- ./mvnw clean install -DskipTests=false -Dmaven.javadoc.skip=false -B -V
+- ./mvnw clean test -B -V
