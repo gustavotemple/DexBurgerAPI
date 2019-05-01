@@ -38,7 +38,7 @@ public final class IngredientRepository {
 	}
 
 	public Optional<Ingredient> findById(Long id) {
-		return ingredients.stream().filter(i -> id.equals(i.getId())).findAny();
+		return ingredients.stream().filter(i -> id.equals(i.get_id())).findAny();
 	}
 
 }

@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
 	 * @return Burger
 	 */
 	private Burger burgerDTOtoBurger(final BurgerDTO burgerDTO) {
-		Burger burger = burgerFactory.create(burgerDTO.getId());
+		Burger burger = burgerFactory.create(burgerDTO.get_id());
 
 		if (!CollectionUtils.isEmpty(burgerDTO.getExtras())) {
 			List<Ingredient> extras = ingredientsDTOtoIngredients(burgerDTO.getExtras());

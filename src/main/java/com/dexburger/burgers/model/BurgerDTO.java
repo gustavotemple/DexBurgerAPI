@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class BurgerDTO {
 
 	@ApiModelProperty(notes = "Numero do lanche")
-	private Long id;
+	private Long _id;
 
 	@ApiModelProperty(notes = "Ingredientes Extras")
 	private List<Long> extras;
@@ -17,12 +17,12 @@ public class BurgerDTO {
 	private BurgerDTO() {
 	}
 
-	public Long getId() {
-		return id;
+	public Long get_id() {
+		return _id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void set_id(Long id) {
+		this._id = id;
 	}
 
 	public List<Long> getExtras() {

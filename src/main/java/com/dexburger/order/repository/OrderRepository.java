@@ -22,7 +22,7 @@ public final class OrderRepository {
 	}
 
 	public Optional<Order> findById(Long id) {
-		return orders.stream().filter(i -> id.equals(i.getId())).findAny();
+		return orders.stream().filter(i -> id.equals(i.get_id())).findAny();
 	}
 
 	public void add(Order order) {

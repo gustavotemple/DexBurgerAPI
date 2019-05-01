@@ -21,7 +21,7 @@ public class Order {
 	private static AtomicLong COUNT = new AtomicLong(0L);
 
 	@ApiModelProperty(notes = "Numero do pedido")
-	private Long id;
+	private Long _id;
 
 	@JsonIgnore
 	private BigDecimal price;
@@ -33,16 +33,16 @@ public class Order {
 	private List<Burger> burgers = new ArrayList<>();
 
 	public Order() {
-		id = COUNT.incrementAndGet();
+		_id = COUNT.incrementAndGet();
 	}
 
-	public Long getId() {
-		return id;
+	public Long get_id() {
+		return _id;
 	}
 
-	public void setId(Long id) {
-		if (Objects.isNull(this.id))
-			this.id = id;
+	public void set_id(Long id) {
+		if (Objects.isNull(this._id))
+			this._id = id;
 	}
 
 	public BigDecimal getPrice() {
@@ -73,7 +73,7 @@ public class Order {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((_id == null) ? 0 : _id.hashCode());
 		return result;
 	}
 
@@ -86,10 +86,10 @@ public class Order {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (_id == null) {
+			if (other._id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!_id.equals(other._id))
 			return false;
 		return true;
 	}
