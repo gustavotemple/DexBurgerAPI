@@ -1,6 +1,8 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jre-alpine
+EXPOSE 80
 VOLUME /tmp
 ARG JAR_FILE
-COPY ${JAR_FILE} app.jar
+ADD  ${JAR_FILE} app.jar
 RUN sh -c 'touch /app.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENV JAVA_OPTS=""
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
