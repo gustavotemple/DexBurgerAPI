@@ -12,4 +12,4 @@ script:
   - ./mvnw clean test -B -V
 
 after_deploy:
-  - ./mvnw docker:build
+  - ./mvnw clean docker:build
