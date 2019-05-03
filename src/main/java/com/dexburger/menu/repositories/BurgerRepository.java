@@ -18,7 +18,7 @@ public final class BurgerRepository {
 	}
 
 	private BurgerRepository(BurgerFactory burgerFactory) {
-		burgers = new ArrayList<Burger>();
+		burgers = new ArrayList<>();
 
 		burgers.add(burgerFactory.create(BurgersInfo.XBACON));
 		burgers.add(burgerFactory.create(BurgersInfo.XBURGER));

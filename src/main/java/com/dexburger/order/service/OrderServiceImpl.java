@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
 	 * @return List<Ingredient>
 	 */
 	private List<Ingredient> ingredientsDTOtoIngredients(final List<Long> ingredientsDTO) {
-		List<Ingredient> ingredients = new ArrayList<Ingredient>();
+		List<Ingredient> ingredients = new ArrayList<>();
 
 		for (Long ingredientDTO : ingredientsDTO)
 			ingredients.add(ingredientFactory.create(ingredientDTO));

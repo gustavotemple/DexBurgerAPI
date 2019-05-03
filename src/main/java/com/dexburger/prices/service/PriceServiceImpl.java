@@ -72,7 +72,7 @@ public class PriceServiceImpl implements PriceService {
 	private void applyDiscount(final Burger burger, final IngredientsInfo ingredient, final Discounts discount) {
 		long total = burger.getIngredients().stream().filter(ingredient.getPredicate()).count();
 
-		long pay = (long) total - ((long) total / discount.getQuantityDiscount());
+		long pay = total - (total / discount.getQuantityDiscount());
 
 		long diff = total - pay;
 

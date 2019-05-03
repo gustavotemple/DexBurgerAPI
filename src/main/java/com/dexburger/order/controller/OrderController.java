@@ -62,7 +62,7 @@ public class OrderController {
 
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Exclui um pedido")
-	public ResponseEntity<?> deleteOrder(@PathVariable("id") Long orderId) {
+	public ResponseEntity<Object> deleteOrder(@PathVariable("id") Long orderId) {
 		orderService.deleteOrder(orderId);
 
 		return ResponseEntity.noContent().build();

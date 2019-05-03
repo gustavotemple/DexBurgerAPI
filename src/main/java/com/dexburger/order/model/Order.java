@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "Pedido")
 public class Order {
 
-	private static AtomicLong COUNT = new AtomicLong(0L);
+	private static final AtomicLong COUNT = new AtomicLong(0L);
 
 	@ApiModelProperty(notes = "Numero do pedido")
 	private Long _id;

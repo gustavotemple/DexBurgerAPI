@@ -14,7 +14,7 @@ public final class OrderRepository {
 	private List<Order> orders;
 
 	private OrderRepository() {
-		orders = new ArrayList<Order>();
+		orders = new ArrayList<>();
 	}
 
 	public List<Order> findAll() {

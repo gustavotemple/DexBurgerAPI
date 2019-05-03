@@ -18,7 +18,7 @@ public final class IngredientRepository {
 	}
 
 	private IngredientRepository(IngredientFactory ingredientFactory) {
-		ingredients = new ArrayList<Ingredient>();
+		ingredients = new ArrayList<>();
 
 		ingredients.add(ingredientFactory.create(IngredientsInfo.LETUCE));
 		ingredients.add(ingredientFactory.create(IngredientsInfo.BACON));
