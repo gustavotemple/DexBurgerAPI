@@ -1,5 +1,5 @@
 FROM openjdk:8-jre-alpine
-EXPOSE 80
+EXPOSE 8090
 VOLUME /tmp
 ARG JAR_FILE
 ADD  ${JAR_FILE} app.jar

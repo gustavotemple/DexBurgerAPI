@@ -1,0 +1,18 @@
+version: '3'
+services:
+  dexburger:
+    image: dexburgerapi
+    restart: on-failure
+    expose:
+      - "8090"
+
+  proxy:
+    image: nginx:alpine
+    ports:
+    - "80:80"
+    volumes:
+    - ./src/main/resources/nginx/:/etc/nginx/conf.d/
+    depends_on:
+    - dexburger
+    restart: on-failure
+
