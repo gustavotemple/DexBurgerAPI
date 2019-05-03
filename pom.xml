@@ -8,7 +8,7 @@
 		<version>2.1.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.dexburger</groupId>
 	<artifactId>DexBurgerAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>DexBurgerAPI</name>
@@ -85,13 +85,34 @@
                     </execution>
                 </executions>
                 <configuration>
-					<imageName>${project.artifactId}</imageName>
+					<repository>dexburgerapi</repository>
                     <tag>latest</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.${project.packaging}</JAR_FILE>
                     </buildArgs>
                 </configuration>
             </plugin>
+
+			<plugin>
+			  <groupId>com.spotify</groupId>
+			  <artifactId>docker-maven-plugin</artifactId>
+			  <version>1.0.0</version>
+			  <configuration>
+				<imageName>dexburgerapi</imageName>
+				<dockerDirectory>${project.basedir}</dockerDirectory>
+				<resources>
+				   <resource>
+					 <targetPath>/</targetPath>
+					 <directory>${project.build.directory}</directory>
+					 <include>${project.build.finalName}.${project.packaging}</include>
+				   </resource>
+				</resources>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.${project.packaging}</JAR_FILE>
+                    </buildArgs>
+			  </configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
