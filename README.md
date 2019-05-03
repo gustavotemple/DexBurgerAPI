@@ -5,6 +5,9 @@
 ### Discount Formula:
 + https://www.wolframalpha.com/input/?i=f(x)+%3D+x+-+Quotient%5Bx,+3%5D
 
+### CI:
++ Travis CI
+
 ### Architecture:
 + Package by Feature
 
