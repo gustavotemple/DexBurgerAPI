@@ -3,6 +3,7 @@ package com.dexburger.prices.service;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -137,6 +138,7 @@ public class PriceServiceTest {
 	}
 
 	@Test
+	@SuppressWarnings("serial")
 	public void testOrderPrice() {
 		Order order = new Order();
 
@@ -144,7 +146,13 @@ public class PriceServiceTest {
 		Burger xEgg = burgerFactory.create(BurgersInfo.XEGG);
 		Burger xBacon = burgerFactory.create(BurgersInfo.XBACON);
 
-		order.addBurger(xBurger).addBurger(xEgg).addBurger(xBacon);
+		order.setBurgers(new ArrayList<Burger>() {
+			{
+				add(xBurger);
+				add(xEgg);
+				add(xBacon);
+			}
+		});
 
 		priceService.calculatePrice(xBurger);
 		priceService.calculatePrice(xEgg);

@@ -65,13 +65,8 @@ public class Order {
 		return Optional.ofNullable(burgers).orElse(Collections.emptyList());
 	}
 
-	public Order addBurger(Burger burger) {
-		this.burgers.add(burger);
-		return this;
-	}
-
-	public void removeBurger(Burger burger) {
-		this.burgers.remove(burger);
+	public void setBurgers(List<Burger> burgers) {
+		this.burgers = burgers;
 	}
 
 	@Override
