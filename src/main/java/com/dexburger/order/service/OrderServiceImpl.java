@@ -8,15 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.dexburger.burgers.dto.BurgerDTO;
 import com.dexburger.burgers.factory.BurgerFactory;
 import com.dexburger.burgers.model.Burger;
-import com.dexburger.burgers.model.BurgerDTO;
 import com.dexburger.exceptions.BurgerNotFoundException;
+import com.dexburger.exceptions.IngredientNotFoundException;
 import com.dexburger.exceptions.OrderNotFoundException;
+import com.dexburger.ingredients.dto.IngredientDTO;
 import com.dexburger.ingredients.factory.IngredientFactory;
 import com.dexburger.ingredients.model.Ingredient;
+import com.dexburger.menu.repositories.IngredientRepository;
+import com.dexburger.order.dto.OrderDTO;
 import com.dexburger.order.model.Order;
-import com.dexburger.order.model.OrderDTO;
 import com.dexburger.order.repository.OrderRepository;
 import com.dexburger.prices.service.PriceService;
 
@@ -36,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
 		this.orderRepository = orderRepository;
 		this.priceService = priceService;
 	}
-	
+
 	/**
 	 * 
 	 * @param order      Order
@@ -62,12 +65,12 @@ public class OrderServiceImpl implements OrderService {
 			for (Ingredient extra : extras)
 				burger.addIngredient(extra);
 		}
-		
+
 		calculateFinalPrice(burger);
 
 		return burger;
 	}
-	
+
 	/**
 	 * applyDiscount
 	 * 
@@ -84,11 +87,14 @@ public class OrderServiceImpl implements OrderService {
 	 * @param ingredientsDTO List<Long>
 	 * @return List<Ingredient>
 	 */
-	private List<Ingredient> ingredientsDTOtoIngredients(final List<Long> ingredientsDTO) {
+	private List<Ingredient> ingredientsDTOtoIngredients(final List<IngredientDTO> ingredientsDTO) {
 		List<Ingredient> ingredients = new ArrayList<>();
 
-		for (Long ingredientDTO : ingredientsDTO)
-			ingredients.add(ingredientFactory.create(ingredientDTO));
+		for (IngredientDTO ingredientDTO : ingredientsDTO) {
+			Ingredient ingredient = IngredientRepository.getInstance(ingredientFactory).findById(ingredientDTO.get_id())
+					.orElseThrow(() -> new IngredientNotFoundException(ingredientDTO.get_id()));
+			ingredients.add(ingredient);
+		}
 
 		return ingredients;
 	}
@@ -115,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order updateOrder(final Long orderId, final OrderDTO orderDTO) {
 		List<BurgerDTO> burgersDTO = orderDTO.getBurgers();
-		
+
 		if (CollectionUtils.isEmpty(burgersDTO))
 			throw new BurgerNotFoundException();
 

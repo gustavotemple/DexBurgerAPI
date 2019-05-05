@@ -1,6 +1,11 @@
-package com.dexburger.burgers.model;
+package com.dexburger.burgers.dto;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
+import com.dexburger.burgers.validator.Burger;
+import com.dexburger.ingredients.dto.IngredientDTO;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,11 +13,13 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "Lanche")
 public class BurgerDTO {
 
+	@Burger
 	@ApiModelProperty(notes = "Numero do lanche")
 	private Long _id;
 
+	@Valid
 	@ApiModelProperty(notes = "Ingredientes Extras")
-	private List<Long> extras;
+	private List<IngredientDTO> extras;
 
 	private BurgerDTO() {
 	}
@@ -25,11 +32,11 @@ public class BurgerDTO {
 		this._id = id;
 	}
 
-	public List<Long> getExtras() {
+	public List<IngredientDTO> getExtras() {
 		return extras;
 	}
 
-	public void setExtras(List<Long> extras) {
+	public void setExtras(List<IngredientDTO> extras) {
 		this.extras = extras;
 	}
 

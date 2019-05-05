@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dexburger.burgers.model.Burger;
-import com.dexburger.configuration.ApplicationConfig;
+import com.dexburger.configurations.ApplicationConfig;
 import com.dexburger.ingredients.model.Ingredient;
 import com.dexburger.menu.service.MenuService;
 

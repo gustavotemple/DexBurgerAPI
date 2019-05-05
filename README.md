@@ -8,8 +8,8 @@
 ### CI:
 + Travis CI
 
-### Architecture:
-+ Package by Feature
+### Package Organization:
++ Feature before Layers
 
 ### Design Patterns:
 + Strategy

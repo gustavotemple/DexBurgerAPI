@@ -47,7 +47,7 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public Burger getBurgerById(Long id) {
-		final Burger burger = BurgerRepository.getInstance(burgerFactory).findById(id)
+		Burger burger = BurgerRepository.getInstance(burgerFactory).findById(id)
 				.orElseThrow(() -> new BurgerNotFoundException(id));
 
 		priceService.calculatePrice(burger);

@@ -37,7 +37,7 @@ public final class BurgerRepository {
 	}
 
 	public Optional<Burger> findById(Long id) {
-		return burgers.stream().filter(i -> id.equals(i.get_id())).findAny();
+		return burgers.stream().filter(i -> i.get_id().equals(id)).findAny();
 	}
 
 }

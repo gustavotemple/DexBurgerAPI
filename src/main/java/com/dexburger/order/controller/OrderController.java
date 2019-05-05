@@ -1,5 +1,6 @@
 package com.dexburger.order.controller;
 
+import java.net.URI;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -14,11 +15,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import com.dexburger.configuration.ApplicationConfig;
 import com.dexburger.burgers.model.Burger;
+import com.dexburger.configurations.ApplicationConfig;
+import com.dexburger.order.dto.OrderDTO;
 import com.dexburger.order.model.Order;
-import com.dexburger.order.model.OrderDTO;
 import com.dexburger.order.service.OrderService;
 
 import io.swagger.annotations.Api;
@@ -38,8 +40,12 @@ public class OrderController {
 
 	@PostMapping
 	@ApiOperation(value = "Adiciona um pedido")
-	public ResponseEntity<Order> addOrder(@Valid @RequestBody OrderDTO orderDTO) {
-		return ResponseEntity.ok().body(orderService.addOrder(orderDTO));
+	public ResponseEntity<Order> addOrder(@Valid @RequestBody OrderDTO orderDTO, UriComponentsBuilder uriBuilder) {
+		Order order = orderService.addOrder(orderDTO);
+
+		URI path = uriBuilder.path(ApplicationConfig.PREFIX + "/orders/{id}").buildAndExpand(order.get_id()).toUri();
+
+		return ResponseEntity.created(path).body(order);
 	}
 
 	@GetMapping("/{id}")

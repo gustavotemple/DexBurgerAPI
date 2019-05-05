@@ -3,8 +3,8 @@ package com.dexburger.order.service;
 import java.util.Collection;
 
 import com.dexburger.burgers.model.Burger;
+import com.dexburger.order.dto.OrderDTO;
 import com.dexburger.order.model.Order;
-import com.dexburger.order.model.OrderDTO;
 
 public interface OrderService {
 
