@@ -1,5 +1,6 @@
 package com.dexburger.burgers.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +16,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Lanche")
-public abstract class Burger {
+public abstract class Burger implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(notes = "Numero do lanche")
 	private Long _id;

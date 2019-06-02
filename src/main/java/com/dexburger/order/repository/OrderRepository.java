@@ -9,13 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.dexburger.order.model.Order;
 
 @Repository
-public final class OrderRepository {
+public class OrderRepository {
 
-	private List<Order> orders;
-
-	private OrderRepository() {
-		orders = new ArrayList<>();
-	}
+	private List<Order> orders = new ArrayList<>();;
 
 	public List<Order> findAll() {
 		return orders;

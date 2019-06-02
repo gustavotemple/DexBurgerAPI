@@ -1,12 +1,15 @@
 package com.dexburger.ingredients.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Ingrediente")
-public class Ingredient {
+public class Ingredient implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(notes = "Numero do ingrediente")
 	private Long _id;

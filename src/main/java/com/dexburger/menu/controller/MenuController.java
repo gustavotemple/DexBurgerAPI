@@ -3,6 +3,7 @@ package com.dexburger.menu.controller;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,28 +30,32 @@ public class MenuController {
 		this.menuService = menuService;
 	}
 
+	@Cacheable(value="burgers")
 	@GetMapping("/burgers")
 	@ApiOperation(value = "Retorna todos lanches do menu")
-	public ResponseEntity<Collection<Burger>> getBurgers() {
-		return ResponseEntity.ok().body(menuService.getBurgers());
+	public Collection<Burger> getBurgers() {
+		return menuService.getBurgers();
 	}
 
+	@Cacheable(value="burgers", key="#id")
 	@GetMapping("/burgers/{id}")
 	@ApiOperation(value = "Retorna um lanche do menu")
-	public ResponseEntity<Burger> getBurgerById(@PathVariable("id") Long burgerId) {
-		return ResponseEntity.ok().body(menuService.getBurgerById(burgerId));
+	public Burger getBurgerById(@PathVariable("id") Long burgerId) {
+		return menuService.getBurgerById(burgerId);
 	}
 
+	@Cacheable(value="ingredients")
 	@GetMapping("/ingredients")
 	@ApiOperation(value = "Retorna todos ingredientes do menu")
-	public ResponseEntity<Collection<Ingredient>> getIngredients() {
-		return ResponseEntity.ok().body(menuService.getIngredients());
+	public Collection<Ingredient> getIngredients() {
+		return menuService.getIngredients();
 	}
 
+	@Cacheable(value="ingredients", key="#id")
 	@GetMapping("/ingredients/{id}")
 	@ApiOperation(value = "Retorna um ingrediente do menu")
-	public ResponseEntity<Ingredient> getIngredientById(@PathVariable("id") Long ingredientId) {
-		return ResponseEntity.ok().body(menuService.getIngredientById(ingredientId));
+	public Ingredient getIngredientById(@PathVariable("id") Long ingredientId) {
+		return menuService.getIngredientById(ingredientId);
 	}
 
 }

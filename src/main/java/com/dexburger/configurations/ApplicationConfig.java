@@ -2,6 +2,7 @@ package com.dexburger.configurations;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import com.dexburger.prices.IngredientsPrices;
 
 @Configuration
+@EnableCaching
 @EnableConfigurationProperties(IngredientsPrices.class)
 public class ApplicationConfig {
 

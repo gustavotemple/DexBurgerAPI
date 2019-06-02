@@ -5,6 +5,8 @@ services:
     restart: on-failure
     expose:
       - "8090"
+    links:
+     - redis
 
   proxy:
     image: nginx:alpine
@@ -16,3 +18,9 @@ services:
     - dexburger
     restart: on-failure
 
+  redis:
+    image: redis
+    hostname: redis
+    restart: on-failure
+    ports:
+      - "6379:6379"
