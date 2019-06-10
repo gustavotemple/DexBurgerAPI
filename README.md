@@ -26,3 +26,4 @@
 + JUnit
 + Mockito
 + Swagger
++ Redis (cache)
