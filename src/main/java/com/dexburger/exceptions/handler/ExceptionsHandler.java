@@ -1,4 +1,4 @@
-package com.dexburger.handler;
+package com.dexburger.exceptions.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
