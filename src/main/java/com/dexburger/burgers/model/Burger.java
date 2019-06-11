@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dexburger.ingredients.model.Ingredient;
-import com.dexburger.prices.discounts.Discounts;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -36,7 +35,7 @@ public abstract class Burger implements Serializable {
 	private List<Ingredient> ingredients;
 
 	@ApiModelProperty(notes = "Descontos")
-	private List<Discounts> discounts;
+	private List<String> discounts;
 
 	public Burger(Long id, String name) {
 		this._id = id;
@@ -69,15 +68,15 @@ public abstract class Burger implements Serializable {
 		this.prettyPrintPrice = prettyPrintPrice;
 	}
 
-	public List<Discounts> getDiscounts() {
+	public List<String> getDiscounts() {
 		return Optional.ofNullable(discounts).orElse(Collections.emptyList());
 	}
 
-	public void addDiscount(Discounts discount) {
+	public void addDiscount(String discount) {
 		this.discounts.add(discount);
 	}
 
-	public void removeDiscount(Discounts discount) {
+	public void removeDiscount(String discount) {
 		this.discounts.remove(discount);
 	}
 

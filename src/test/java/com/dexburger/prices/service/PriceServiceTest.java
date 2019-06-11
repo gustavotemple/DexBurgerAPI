@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +22,11 @@ import com.dexburger.ingredients.factory.IngredientFactory;
 import com.dexburger.ingredients.model.Ingredient;
 import com.dexburger.order.model.Order;
 import com.dexburger.prices.IngredientsPrices;
-import com.dexburger.prices.discounts.Discounts;
+import com.dexburger.prices.discounts.CheeseDiscount;
+import com.dexburger.prices.discounts.LightDiscount;
+import com.dexburger.prices.discounts.MeatDiscount;
+import com.dexburger.prices.discounts.PercentageDiscount;
+import com.dexburger.prices.discounts.QuantityDiscount;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class PriceServiceTest {
@@ -31,6 +36,9 @@ public class PriceServiceTest {
 	private IngredientFactory ingredientFactory;
 	private BurgerFactory burgerFactory;
 	private PriceService priceService;
+
+	private List<QuantityDiscount> quantityDiscounts = new ArrayList<QuantityDiscount>();
+	private List<PercentageDiscount> percentageDiscounts = new ArrayList<PercentageDiscount>();
 
 	private BigDecimal letucePrice;
 	private BigDecimal baconPrice;
@@ -42,7 +50,11 @@ public class PriceServiceTest {
 	public void setUp() {
 		ingredientFactory = new IngredientFactory(ingredientsPrices);
 		burgerFactory = new BurgerFactory(ingredientFactory);
-		priceService = new PriceServiceImpl();
+
+		quantityDiscounts.add(new CheeseDiscount());
+		quantityDiscounts.add(new MeatDiscount());
+		percentageDiscounts.add(new LightDiscount());
+		priceService = new PriceServiceImpl(quantityDiscounts, percentageDiscounts);
 
 		letucePrice = new BigDecimal("0.40");
 		baconPrice = new BigDecimal("2.00");
@@ -134,7 +146,7 @@ public class PriceServiceTest {
 
 		BigDecimal price = meatPrice.add(cheesePrice).add(letucePrice).add(letucePrice);
 
-		assertEquals(burger.getPrice(), price.subtract(percentage(price, Discounts.LIGHT.getPercentageDiscount())));
+		assertEquals(burger.getPrice(), price.subtract(percentage(price, LightDiscount.DISCOUNT)));
 	}
 
 	@Test

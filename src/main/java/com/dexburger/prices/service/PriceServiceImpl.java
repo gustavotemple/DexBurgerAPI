@@ -2,23 +2,35 @@ package com.dexburger.prices.service;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.dexburger.burgers.model.Burger;
 import com.dexburger.exceptions.BurgerNotFoundException;
 import com.dexburger.exceptions.IngredientNotFoundException;
-import com.dexburger.ingredients.IngredientsInfo;
 import com.dexburger.ingredients.model.Ingredient;
 import com.dexburger.order.model.Order;
-import com.dexburger.prices.discounts.Discounts;
+import com.dexburger.prices.discounts.PercentageDiscount;
+import com.dexburger.prices.discounts.QuantityDiscount;
 
 @Service
 public class PriceServiceImpl implements PriceService {
 
 	private static final int SCALE = 2;
+
+	private final List<QuantityDiscount> quantityDiscounts;
+	private final List<PercentageDiscount> percentageDiscounts;
+
+	@Autowired
+	public PriceServiceImpl(final List<QuantityDiscount> quantityDiscounts,
+			final List<PercentageDiscount> percentageDiscounts) {
+		this.quantityDiscounts = quantityDiscounts;
+		this.percentageDiscounts = percentageDiscounts;
+	}
 
 	@Override
 	public void calculatePrice(final Burger burger) {
@@ -46,51 +58,16 @@ public class PriceServiceImpl implements PriceService {
 		if (burger.getPrice() == null || burger.getPrice() == BigDecimal.ZERO)
 			return;
 
-		applyDiscount(burger, IngredientsInfo.MEAT, Discounts.MEAT);
-		applyDiscount(burger, IngredientsInfo.CHEESE, Discounts.CHEESE);
-		applyLightDiscount(burger);
+		quantityDiscounts.forEach(discount -> discount.apply(burger));
+		percentageDiscounts.forEach(discount -> discount.apply(burger));
 
 		burger.setPrettyPrintPrice(formatMoney(burger.getPrice()));
-	}
-
-	private void applyLightDiscount(final Burger burger) {
-		if (burger.getIngredients().contains(IngredientsInfo.LETUCE.getIngredient())
-				&& !burger.getIngredients().contains(IngredientsInfo.BACON.getIngredient())) {
-			burger.setPrice(
-					burger.getPrice().subtract(percentage(burger.getPrice(), Discounts.LIGHT.getPercentageDiscount())));
-			burger.addDiscount(Discounts.LIGHT);
-		}
-	}
-
-	/**
-	 * applyDiscount
-	 * 
-	 * @param burger     Burger
-	 * @param ingredient IngredientsInfo
-	 * @param discount   Discounts
-	 */
-	private void applyDiscount(final Burger burger, final IngredientsInfo ingredient, final Discounts discount) {
-		long total = burger.getIngredients().stream().filter(ingredient.getPredicate()).count();
-
-		long pay = total - (total / discount.getQuantityDiscount());
-
-		long diff = total - pay;
-
-		burger.setPrice(
-				burger.getPrice().subtract(ingredient.getIngredient().getPrice().multiply(new BigDecimal(diff))));
-
-		if (total >= discount.getQuantityDiscount())
-			burger.addDiscount(discount);
 	}
 
 	private String formatMoney(BigDecimal value) {
 		value.setScale(SCALE, BigDecimal.ROUND_HALF_EVEN);
 		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		return format.format(value.doubleValue());
-	}
-
-	private BigDecimal percentage(BigDecimal base, BigDecimal pct) {
-		return base.multiply(pct).scaleByPowerOfTen(-2);
 	}
 
 }
